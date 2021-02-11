@@ -1,4 +1,5 @@
 *.out
 *.gch
 *.o
+*.notworking
 *.nuggets
