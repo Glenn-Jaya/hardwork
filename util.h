@@ -7,6 +7,8 @@
 void handleArgs(int argsLength, char** parameters);
 
 bool isValidLength(int length);
+bool isValidParameters(char ** parameters);
+bool isStringNumber(char* string);
 
 
 

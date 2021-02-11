@@ -27,6 +27,11 @@ test: main.c testMath.o testUtil.o util.o
 	$(CC) $^ 
 	./a.out
 
+testgdb: main.c testMath.o testUtil.o util.o
+	$(CC) $^ 
+	gdb ./a.out
+
+
 clean:
 	rm -f *.o
 	rm -f *.out
