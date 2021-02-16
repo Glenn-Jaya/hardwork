@@ -1,5 +1,5 @@
 CC=clang
-CFLAGS=-g -Wall -Wpedantic -Wextra -Werror
+CFLAGS=-g -Wall -Wpedantic -Wextra -Werror -fno-stack-protector
 
 all: test
 
@@ -7,13 +7,13 @@ all: test
 util.o: ../util.h ../util.c
 	cd ../ && $(CC) $(CFLAGS) -c util.h util.c && cp util.o tests/
 
-#testUtil.o: testUtil.c testUtil.h util.o
-	#$(CC) -c testUtil.c testUtil.h ../util.o
-
-#testUtil.o: testUtil.c testUtil.h util.o
-	#$(CC) -c testUtil.c testUtil.h util.o
+manager.o: ../manager.h ../manager.c
+	cd ../ && $(CC) $(CFLAGS) -c manager.h manager.c && cp manager.o tests/
 
 testUtil.o: testUtil.c testUtil.h util.o
+	$(CC) -c $^
+
+testManager.o: testManager.c testManager.h manager.o
 	$(CC) -c $^
 
 testMath.o: testMath.c tests.h
@@ -23,7 +23,7 @@ testMath.o: testMath.c tests.h
 	#$(CC) $^ ../util.o
 	#./a.out
 
-test: main.c testMath.o testUtil.o util.o
+test: main.c testMath.o testUtil.o util.o testManager.o manager.o
 	$(CC) $^ 
 	./a.out
 

@@ -7,4 +7,4 @@ char * test_valid_length();
 char * test_valid_params();
 char * test_string_is_number();
 
-#endif //TESTS_ALL
+#endif //TESTS_UTIL

@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <stdlib.h>
 #include "../util.h"
 #include "tests.h"
 #include "minunit.h"
@@ -12,7 +13,7 @@ char * test_valid_length()
 
 char * test_valid_params()
 {
-	char** params;
+	char** params = (char**)malloc(sizeof(char*)*4);
 	/*params = {"pgm Name","10000","-p","10"};*/
 	params[0] = "pgmName";
 	params[1] = "1000";
