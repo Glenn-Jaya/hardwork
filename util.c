@@ -8,7 +8,7 @@
 
 #include "util.h"
 
-// precondtion:  argLength is a positive integer number greater than 0
+// precondition:  argLength is a positive integer number greater than 0
 // postconditions: None because it returns void
 void handleArgs(int argsLength, char** parameters)
 {
@@ -46,27 +46,35 @@ bool isValidParameters(char ** parameters)
 	char* total = parameters[1];
 	if (!isStringNumber(total))
 	{
-		printf("\nthe 1st argument after pgm name must be a number\n");
+		printf("\nthe 1st argument after pgm name must be a +'ve number\n");
 		return false;
 	}
 
 	char* type = parameters[2];
 	if (strcmp(type,"-p")!=0 &&  strcmp(type,"-t")!=0)
 	{
-		printf("\nThe 2nd arg after pgm name  must be -p or -t\n");
+		printf("\nThe 2nd arg after pgm name must be -p or -t\n");
 		return false;
 	}
 
 	char* numAtSameTime = parameters[3];
 	if (!isStringNumber(numAtSameTime))
 	{
-		printf("\nThe 3nd arg after pgm name must be a number\n");
+		printf("\nThe 3nd arg after pgm name must be a +'ve number\n");
+		return false;
+	}
+
+	if (atoi(numAtSameTime) > atoi(total))
+	{
+		printf("\nThe 3rd arg after pgm name (y) must be <= than the 1st arg (x)\n");
 		return false;
 	}
 
 	return true;
 }
 
+// note: negative numbers as strings are not considered numbers
+// 	 we should not be having any negative numbers as input anyways
 bool isStringNumber(char* string)
 {
 	/*printf("%s\n",string);*/

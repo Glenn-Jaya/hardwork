@@ -11,10 +11,10 @@ char * test_valid_length()
 	return 0;
 }
 
+// TODO: If have time make each section its own seperate test run in main.c
 char * test_valid_params()
 {
 	char** params = (char**)malloc(sizeof(char*)*4);
-	/*params = {"pgm Name","10000","-p","10"};*/
 	params[0] = "pgmName";
 	params[1] = "1000";
 	params[2] = "-p";
@@ -22,11 +22,35 @@ char * test_valid_params()
 	mu_assert("error with isValidParms in util.c", isValidParameters(params)==true);
 	params[2] = "-t";
 	mu_assert("error with isValidParms in util.c", isValidParameters(params)==true);
+
+	// test forgot dash
 	params[2] = "p";
 	mu_assert("error with isValidParms in util.c", isValidParameters(params)==false);
-	/*params[1] = "asdf";*/
+
+	// test not number
 	params[3] = "i am cool";
 	mu_assert("error with isValidParms in util.c", isValidParameters(params)==false);
+
+	// reset
+	params[2] = "-p";
+	params[3] = "10";
+	mu_assert("error with isValidParms in util.c", isValidParameters(params)==true);
+	params[1] = "1000";
+	mu_assert("error with isValidParms in util.c", isValidParameters(params)==true);
+
+	// test negative
+	params[1] = "-1";
+	mu_assert("error with isValidParms in util.c", isValidParameters(params)==false);
+	params[1] = "1000";
+	mu_assert("error with isValidParms in util.c", isValidParameters(params)==true);
+
+	// test y > x
+	params[3] = "1001";
+	mu_assert("error with isValidParms in util.c", isValidParameters(params)==false);
+	params[3] = "1000";
+	mu_assert("error with isValidParms in util.c", isValidParameters(params)==true);
+
+
 	return 0;
 }
 
