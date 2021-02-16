@@ -33,6 +33,35 @@ idManager newIdManager(int maxSize)
 	return manager;
 }
 
+// precondition:
+// 	* idManager received is valid
+// 	* id is positive
+// postcondition: return true only when array successfully updated with new id
+// invariant: valid length of struct
+
+bool addID(idManager manager, int id)
+{
+	assert(manager!=NULL);
+
+	// decided to return bool if not valid length instead of asserts
+	/*assert(id>-1);*/
+	/*assert(isValidSize(manager));*/
+
+	int currLen = manager->currLength;
+	int maxLen = manager->maxLength;
+	// if neg id, maybe fork return -1
+	if (isValidSize(manager)&&id>-1&&
+			currLen < maxLen)
+	{
+		manager -> data[currLen] = id;
+		manager -> currLength++;
+		if (isValidSize(manager))
+			return true;
+	}
+	return false;
+}
+
+
 idManager destroyManager(idManager manager)
 {
 	if (manager != NULL)
@@ -46,9 +75,19 @@ idManager destroyManager(idManager manager)
 	return NULL;
 }
 
+// Our invariant for this struct. Should check when we insert/delete.
+// note when add last element, currLen = maxLength so it's valid
 bool isValidSize(idManager manager)
 {
+	bool validSize = true;
+
 	int cL = manager->currLength;
 	int maxL = manager->maxLength;
-	return cL<=maxL;
+
+	if (cL > maxL)
+		validSize = false;
+	if (cL < 0)
+		validSize = false;
+
+	return validSize;
 }
