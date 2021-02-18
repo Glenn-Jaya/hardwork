@@ -91,3 +91,28 @@ bool isValidSize(idManager manager)
 
 	return validSize;
 }
+
+// idea: ifdef with function ptr endWork b/c param either pid_t or pthread_t
+// idea: process.c and thread.c have own print function which we pass as func ptr to this function?
+void doWork(idManager manager, int maxConcurrent, 
+		void (*work)(idManager, int*), void (*endWork)(pid_t))
+{
+	int amount = AMOUNT_OF_WORK;
+	int concurrentCounter = 0;
+	int numRun = 0;
+	int totalToRun = manager->maxLength;
+	while (numRun < totalToRun)
+	{
+		while((concurrentCounter+numRun) < totalToRun && 
+				concurrentCounter<maxConcurrent)
+		{
+
+			work(manager,&amount);
+			concurrentCounter++;
+		}
+
+		endWork(manager->data[numRun]);
+		concurrentCounter--;
+		numRun++;
+	}
+}

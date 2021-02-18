@@ -5,6 +5,8 @@
 #include <assert.h>
 #include <stdbool.h>
 
+#define AMOUNT_OF_WORK 10
+
 // Purpose: Provide safe withdrawel/insertion into array of ints that represent ids
 typedef struct idHandler *idManager;
 
@@ -17,5 +19,7 @@ idManager destroyManager(idManager manager);
 bool isValidSize(idManager manager);
 
 bool addID(idManager manager, int id);
+
+void doWork(idManager manager, int maxConcurrent, void (*work)(idManager, int*), void (*endWork)(pid_t));
 
 #endif //MANAGER_H

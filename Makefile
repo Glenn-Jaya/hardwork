@@ -12,6 +12,7 @@ a1: main.c util.o
 clean:
 	rm -f *.out
 	rm -f *.gch
+	rm -f *.o
 
 test:
 	cd tests/ && make

@@ -2,6 +2,8 @@
 #include "minunit.h"
 #include "../manager.h"
 
+#include <stdio.h>
+
 char * test_new_manager()
 {
 	int xx = 10;
@@ -24,5 +26,31 @@ char * test_add_id()
 	mu_assert("error in addID() in manager.c", addID(manager2, 1)==true);
 	mu_assert("error in addID() in manager.c", addID(manager2, -3)==false);
 	destroyManager(manager2);
+	return 0;
+}
+
+int workersCreated = 0;
+int workersEnded = 0;
+
+void workFunc(idManager manager, int* work)
+{
+	addID(manager,*work);
+	workersCreated++;
+}
+
+void endFunc(pid_t id)
+{
+	workersEnded++;
+}
+
+char * test_do_work()
+{
+	int xx = 12;
+	idManager manager = newIdManager(xx);	
+	// get an error if maxConccurent is 0
+	doWork(manager,3,workFunc,endFunc);
+	destroyManager(manager);
+	/*printf("WC: %d, WE: %d\n",workersCreated, workersEnded);*/
+	mu_assert("error in doWork in manager.c", workersCreated == workersEnded);
 	return 0;
 }

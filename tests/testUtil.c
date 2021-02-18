@@ -51,6 +51,7 @@ char * test_valid_params()
 	mu_assert("error with isValidParms in util.c", isValidParameters(params)==true);
 
 
+	free(params);
 	return 0;
 }
 

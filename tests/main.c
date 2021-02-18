@@ -16,6 +16,7 @@ static char * all_tests()
 	mu_run_test(test_string_is_number);
 	mu_run_test(test_new_manager);
 	mu_run_test(test_add_id);
+	mu_run_test(test_do_work);
 
         return 0;
 }
