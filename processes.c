@@ -54,6 +54,6 @@ void endChild(pid_t pid)
 
 
 
-int main()
-{
-}
+/*int main()*/
+/*{*/
+/*}*/
