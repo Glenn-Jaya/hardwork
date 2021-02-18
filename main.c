@@ -3,5 +3,11 @@
 
 int main(int argc, char** argv)
 {
-	handleArgs(argc, argv);
+	if (handleArgs(argc, argv))
+	{
+		int total = atoi(argv[1]);
+		int numAtSameTime = atoi(argv[3]);
+
+		runProcesses(total,numAtSameTime);
+	}
 }

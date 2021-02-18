@@ -10,7 +10,7 @@
 
 // precondition:  argLength is a positive integer number greater than 0
 // postconditions: None because it returns void
-void handleArgs(int argsLength, char** parameters)
+bool handleArgs(int argsLength, char** parameters)
 {
 	assert(argsLength>0);
 	if (isValidLength(argsLength)==false || isValidParameters(parameters)==false)
@@ -24,6 +24,11 @@ void handleArgs(int argsLength, char** parameters)
 		exit(1);
 	}
 
+	/*int total = atoi(parameters[1]);*/
+	/*int numAtSameTime = atoi(parameters[3]);*/
+
+	/*runProcesses(total,numAtSameTime);*/
+	return true;
 }
 
 bool isValidLength(int length)

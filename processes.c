@@ -22,38 +22,9 @@ void endChild(pid_t pid)
 	waitpid(pid,NULL,0);
 }
 
-/*void makeChildren(int totalChildren, int maxConcurrentChildren)*/
-/*{*/
-	/*int work = AMOUNT_OF_WORK;*/
-
-	/*idManager processManager = newIDManager(totalChildren);*/
-
-	/*int childrenCounter = 0;*/
-	/*int concurrentCounter = 0;*/
-	/*int numRun = 0;*/
-	/*while (numRun < totalChildren)*/
-	/*{*/
-		/*while(concurrentCounter<maxConcurrentChildren)*/
-		/*{*/
-			/*childWork(&work);*/
-			/*concurrentCounter++;*/
-		/*}*/
-		/*numRun++;*/
-	/*}*/
-
-	/*int maxRunningOnHardware = MAX_THREADS;*/
-	/*if (numConcurrentChildren < MAX_THREADS)*/
-		/*maxRunningOnHardware = numConcurrentChildren;*/
-
-	/*for (int i = 0; i < maxRunningOnHardware; i++)*/
-	/*{*/
-		/*childWork(&work);*/
-		/*concurrentCounter++;*/
-	/*}*/
-/*}*/
-
-
-
-/*int main()*/
-/*{*/
-/*}*/
+void runProcesses(int totalProcesses, int maxConcurrent)
+{
+	idManager processManager = newIdManager(totalProcesses);
+	doWork(processManager, maxConcurrent, childWork, endChild);
+	destroyManager(processManager);
+}
