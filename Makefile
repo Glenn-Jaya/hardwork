@@ -3,9 +3,6 @@ CFLAGS=-g -Wall -Wpedantic -Wextra -Werror
 
 all: a1
 
-#util.o: util.h util.c
-	#$(CC) $(CFLAGS) -c $^
-
 %.o: %.h %.c
 	$(CC) $(CFLAGS) -c $^
 
