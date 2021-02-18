@@ -92,6 +92,15 @@ bool isValidSize(idManager manager)
 	return validSize;
 }
 
+static void printData(idManager manager)
+{
+	for (int i = 0; i < manager->maxLength;i++)
+	{
+		printf("%d,",manager->data[i]);
+	}
+	printf("\n");
+}
+
 // idea: ifdef with function ptr endWork b/c param either pid_t or pthread_t
 // idea: process.c and thread.c have own print function which we pass as func ptr to this function?
 void doWork(idManager manager, int maxConcurrent, 
@@ -117,4 +126,5 @@ void doWork(idManager manager, int maxConcurrent,
 		numRun++;
 		printf("ended work, total ended: %d\n",numRun);
 	}
+	printData(manager);
 }
