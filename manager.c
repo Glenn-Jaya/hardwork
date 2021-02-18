@@ -109,10 +109,12 @@ void doWork(idManager manager, int maxConcurrent,
 
 			work(manager,&amount);
 			concurrentCounter++;
+			printf("created work, total created: %d\n",numRun+concurrentCounter);
 		}
 
 		endWork(manager->data[numRun]);
 		concurrentCounter--;
 		numRun++;
+		printf("ended work, total ended: %d\n",numRun);
 	}
 }
