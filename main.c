@@ -1,5 +1,16 @@
 #include <stdio.h>
 #include "util.h"
+#include "processes.h"
+#include "threads.h"
+
+#ifdef THREADS
+#define run runThreads
+#endif
+
+#ifndef THREADS
+#define run runProcesses
+#endif
+
 
 int main(int argc, char** argv)
 {
@@ -8,6 +19,6 @@ int main(int argc, char** argv)
 		int total = atoi(argv[1]);
 		int numAtSameTime = atoi(argv[3]);
 
-		runProcesses(total,numAtSameTime);
+		run(total,numAtSameTime);
 	}
 }

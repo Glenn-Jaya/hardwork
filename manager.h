@@ -11,7 +11,7 @@
 #define AMOUNT_OF_WORK 10
 
 #ifdef THREADS
-#define dataType pthread_t
+#define dataType pthread_t*
 #endif
 
 #ifndef THREADS
@@ -29,8 +29,10 @@ idManager destroyManager(idManager manager);
 
 bool isValidSize(idManager manager);
 
-bool addID(idManager manager, int id);
+//bool addID(idManager manager, int id);
+bool addID(idManager manager, dataType id);
 
-void doWork(idManager manager, int maxConcurrent, void (*work)(idManager, int*), void (*endWork)(pid_t));
+void doWork(idManager manager, int maxConcurrent, 
+		void (*work)(idManager, int*), void (*endWork)(dataType));
 
 #endif //MANAGER_H

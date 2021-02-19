@@ -19,13 +19,16 @@ idManager newIdManager(int maxSize)
 	idManager manager = (idManager) malloc(sizeof(idManager));
 	assert(manager != NULL);
 
-	manager->data = (int*)malloc(maxSize*sizeof(dataType));
+	/*manager->data = (int*)malloc(maxSize*sizeof(dataType));*/
+	manager->data = (dataType*)malloc(maxSize*sizeof(dataType));
 	assert(manager->data != NULL);
 
-	for (int i = 0; i < maxSize; i++)
-	{
-		manager->data[i] = -1;
-	}
+	/*for (int i = 0; i < maxSize; i++)*/
+	/*{*/
+		// below is 1 or the other
+		/*manager->data[i] = -1;*/
+		/*manager->data[i] = NULL;*/
+	/*}*/
 
 	manager -> currLength = 0;
 	manager ->maxLength = maxSize;
@@ -50,8 +53,10 @@ bool addID(idManager manager, dataType id)
 	int currLen = manager->currLength;
 	int maxLen = manager->maxLength;
 	// if neg id, maybe fork return -1
-	if (isValidSize(manager)&&id>-1&&
-			currLen < maxLen)
+
+	/*if (isValidSize(manager)&&id>-1&&*/
+			/*currLen < maxLen)*/
+	if (isValidSize(manager) && currLen < maxLen)
 	{
 		manager -> data[currLen] = id;
 		manager -> currLength++;
@@ -96,15 +101,22 @@ static void printData(idManager manager)
 {
 	for (int i = 0; i < manager->maxLength;i++)
 	{
+#ifndef THREADS
 		printf("%d,",manager->data[i]);
+#endif
 	}
 	printf("\n");
 }
 
 // idea: ifdef with function ptr endWork b/c param either pid_t or pthread_t
 // idea: process.c and thread.c have own print function which we pass as func ptr to this function?
+/*void doWork(idManager manager, int maxConcurrent, */
+		/*void (*work)(idManager, int*), void (*endWork)(pid_t))*/
+
+// TODO: invariant for indexing
+
 void doWork(idManager manager, int maxConcurrent, 
-		void (*work)(idManager, int*), void (*endWork)(pid_t))
+		void (*work)(idManager, int*), void (*endWork)(dataType))
 {
 	int amount = AMOUNT_OF_WORK;
 	int concurrentCounter = 0;

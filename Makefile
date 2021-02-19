@@ -1,13 +1,19 @@
 CC=clang
 CFLAGS=-g -Wall -Wpedantic -Wextra -Werror
 
-all: a1
+all: processes threads
 
 %.o: %.h %.c
 	$(CC) $(CFLAGS) -c $^
 
-a1: main.c util.o hardwork.o manager.o processes.o
+%.ot: %.h %.c
+	$(CC) $(CFLAGS) -DTHREADS -c $^
+
+processes: main.c util.o hardwork.o manager.o processes.o
 	$(CC) $(CFLAGS) -o $@.out $^
+
+threads: main.c util.ot hardwork.ot manager.ot threads.ot
+	$(CC) $(CFLAGS) -DTHREADS -lpthread -o $@.out main.c util.o hardwork.o manager.o threads.o
 
 clean:
 	rm -f *.out
