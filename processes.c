@@ -3,7 +3,7 @@
 
 void childWork(idManager processManager, int* work)
 {
-	int id = fork();
+	pid_t id = fork();
 	if (id<0)
 	{
 		fprintf(stderr, "fork failed\n");
@@ -19,7 +19,6 @@ void childWork(idManager processManager, int* work)
 
 void endChild(pid_t pid)
 {
-	printf("i am ending this: %d\n",pid);
 	waitpid(pid,NULL,0);
 }
 
