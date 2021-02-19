@@ -3,7 +3,7 @@
 
 void childWork(idManager processManager, int* work)
 {
-	int id = fork();
+	pid_t id = fork();
 	if (id<0)
 	{
 		fprintf(stderr, "fork failed\n");
