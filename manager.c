@@ -97,16 +97,6 @@ bool isValidSize(idManager manager)
 	return validSize;
 }
 
-static void printData(idManager manager)
-{
-	for (int i = 0; i < manager->maxLength;i++)
-	{
-#ifndef THREADS
-		printf("%d,",manager->data[i]);
-#endif
-	}
-	printf("\n");
-}
 
 // idea: ifdef with function ptr endWork b/c param either pid_t or pthread_t
 // idea: process.c and thread.c have own print function which we pass as func ptr to this function?
@@ -149,7 +139,6 @@ void doWork(idManager manager, int maxConcurrent,
 
 	clock_gettime(CLOCK_REALTIME, &endClk);
 	duration = diff(beginClk, endClk);
-	printData(manager);
 	printf("\n\nCompleted in: %ld seconds and %ld nanoseconds.\n\n", 
 			duration.tv_sec, duration.tv_nsec);
 }
