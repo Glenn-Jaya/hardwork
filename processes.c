@@ -19,7 +19,6 @@ void childWork(idManager processManager, int* work)
 
 void endChild(pid_t pid)
 {
-	printf("i am ending this: %d\n",pid);
 	waitpid(pid,NULL,0);
 }
 
