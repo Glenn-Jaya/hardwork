@@ -110,6 +110,14 @@ void doWork(idManager manager, int maxConcurrent,
 	int concurrentCounter = 0;
 	int numRun = 0;
 	int totalToRun = manager->maxLength;
+
+	// timing code
+	struct timespec beginClk;
+	struct timespec endClk;
+	struct timespec duration;	
+
+	clock_gettime(CLOCK_REALTIME, &beginClk);
+
 	while (numRun < totalToRun)
 	{
 		while((concurrentCounter+numRun) < totalToRun && 
@@ -126,5 +134,10 @@ void doWork(idManager manager, int maxConcurrent,
 		numRun++;
 		printf("ended work, total ended: %d\n",numRun);
 	}
+
+	clock_gettime(CLOCK_REALTIME, &endClk);
+	duration = diff(beginClk, endClk);
 	printData(manager);
+	printf("\n\nCompleted in: %ld seconds and %ld nanoseconds.\n\n", 
+			duration.tv_sec, duration.tv_nsec);
 }

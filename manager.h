@@ -6,6 +6,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+#include "hardwork.h"
+
 #define AMOUNT_OF_WORK 10
 
 // Purpose: Provide safe withdrawel/insertion into array of ints that represent ids
