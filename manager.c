@@ -4,7 +4,7 @@ struct idHandler
 {
 	int maxLength;
 	int currLength;
-	int *data;
+	dataType *data;
 };
 
 
@@ -19,7 +19,7 @@ idManager newIdManager(int maxSize)
 	idManager manager = (idManager) malloc(sizeof(idManager));
 	assert(manager != NULL);
 
-	manager->data = (int*)malloc(maxSize*sizeof(int));
+	manager->data = (int*)malloc(maxSize*sizeof(dataType));
 	assert(manager->data != NULL);
 
 	for (int i = 0; i < maxSize; i++)
@@ -39,7 +39,7 @@ idManager newIdManager(int maxSize)
 // postcondition: return true only when array successfully updated with new id
 // invariant: valid length of struct
 
-bool addID(idManager manager, int id)
+bool addID(idManager manager, dataType id)
 {
 	assert(manager!=NULL);
 
