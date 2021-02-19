@@ -10,6 +10,14 @@
 
 #define AMOUNT_OF_WORK 10
 
+#ifdef THREADS
+#define dataType pthread_t
+#endif
+
+#ifndef THREADS
+#define dataType pid_t
+#endif
+
 // Purpose: Provide safe withdrawel/insertion into array of ints that represent ids
 typedef struct idHandler *idManager;
 
