@@ -6,7 +6,7 @@
 * README
 * main.c
 * hardwork .c and .h
-	* Code relating to the hard_work function and calculation of timing duration
+	* Code relating to the hard\_work function and calculation of timing duration
 * util .c and .h
 	* small helper functions to handle/validate run time args
 * manager.c and .h
@@ -39,13 +39,23 @@ The above command produces 2 executables: processes.out and threads.out
 ## Run Pgms
 
 ```
-./processes x y # for processes
+./processes.out x y # for processes
 
-./threads x y # for threads
+./threads.out x y # for threads
 ```
 
 Where x is the total number of threads/processes to run.
 Where y is the maximum number of threads/processes you want to be able to run at the same time/concurrently.
+
+## Clean
+
+```
+make clean
+```
+
+Make produces a lot of intermediary files for the linker.
+This command removes everything but the listed files at the top of this README in the current directory.
+Do note that the tests/ folder has its own make clean rule.
 
 
 ## Unit Tests
@@ -93,9 +103,9 @@ But Dr Rasit informed us that we can use preprocessor code to specify whether we
 The benefit of this is that both threads and processes are using manager.c and therefore are using the same overarching logic for both.
 This minimizes the amount of difference between the 2 executables produced which is important because we are interested in the difference between the two.
 
-IFDEF THREADS were used in only 2 places. Once in main to decide whether to run the processes.c or threads.c code. The other is in manager.h so that the type the array stores can either be pid_t (an int) or pthread_t (unsigned long in this environement) at compile time.
+IFDEF THREADS were used in only 2 places. Once in main to decide whether to run the processes.c or threads.c code. The other is in manager.h so that the type the array stores can either be pid\_t (an int) or pthread\_t (unsigned long in this environement) at compile time.
 
-Function pointers were also used (took inspiration from pthread_create in man pages!) to provide modularity. To give an example from code:
+Function pointers were also used (took inspiration from pthread\_create in man pages!) to provide modularity. To give an example from code:
 
 ```
 void doWork(idManager manager, int maxConcurrent,
