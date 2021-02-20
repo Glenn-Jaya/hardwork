@@ -68,6 +68,12 @@ bool isValidParameters(char ** parameters)
 		return false;
 	}
 
+	if (atoi(numAtSameTime)==0)
+	{
+		printf("\nThe 2nd arg after pgm name (y) can't be 0, must be 1 or greater\n");
+		return false;
+	}
+
 	return true;
 }
 
