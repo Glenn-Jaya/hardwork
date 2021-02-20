@@ -74,8 +74,10 @@ idManager destroyManager(idManager manager)
 		if (manager->data != NULL)
 		{
 			free(manager->data);
+			manager->data = NULL;
 		}
 		free(manager);
+		manager = NULL;
 	}
 	return NULL;
 }

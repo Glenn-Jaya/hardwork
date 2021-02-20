@@ -5,6 +5,11 @@
 #include <sys/wait.h>
 
 #include "manager.h"
+/*
+ * Functions used from manager.h:
+ * 	addID(), newIdManager(),
+ * 	doWork(), destoryManager()
+ * 	*/
 
 void childWork(idManager processManager, int* work);
 void endChild(pid_t pid);

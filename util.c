@@ -84,4 +84,3 @@ bool isStringNumber(char* string)
 	}
 	return true;
 }
-
