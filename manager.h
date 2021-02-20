@@ -1,3 +1,8 @@
+// Description: 
+// 	* Handles manipulation of an encapsulated array that holds ids of processes or threads in a safe manner.
+// 	* Contains logic to safely start and end given work on each element of this array
+
+
 #ifndef MANAGER_H
 #define MANAGER_H 
 
@@ -36,6 +41,7 @@ bool addID(idManager manager, dataType id);
 
 // main logic, every element added to array by addID() has work and endWork done to it
 // 	ensures we always end the work not just start it and don't incorrectly access array :)
+// It uses function pointers, I took inspiration from how pthread_create from the man pages!
 void doWork(idManager manager, int maxConcurrent, 
 		void (*work)(idManager, int*), void (*endWork)(dataType));
 
