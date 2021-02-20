@@ -1,5 +1,9 @@
 #include "manager.h"
 
+// this struct is not defined in the .h to provide encapsulation
+// for example other c files do not know anything about the vars inside
+// 	they only know about the ptr in header.
+// 	fun way to sort of provide Object O
 struct idHandler
 {
 	int maxLength;
@@ -9,53 +13,38 @@ struct idHandler
 
 
 // Precondition: maxSize is not negative
-// Postcondition: 
-// 	* non null idManager returned
-// 	* int array initialized with all -1
+// Postcondition: non null and valid sized idManager returned
+// Invariant: idManager is validSize
 idManager newIdManager(int maxSize)
 {
 	// should never be neg here because handleArgs func in util.c deals with that
 	assert (maxSize > 0);
+
 	idManager manager = (idManager) malloc(sizeof(idManager));
 	assert(manager != NULL);
 
-	/*manager->data = (int*)malloc(maxSize*sizeof(dataType));*/
 	manager->data = (dataType*)malloc(maxSize*sizeof(dataType));
 	assert(manager->data != NULL);
-
-	/*for (int i = 0; i < maxSize; i++)*/
-	/*{*/
-		// below is 1 or the other
-		/*manager->data[i] = -1;*/
-		/*manager->data[i] = NULL;*/
-	/*}*/
 
 	manager -> currLength = 0;
 	manager ->maxLength = maxSize;
 
+	assert(isValidSize(manager));
+
 	return manager;
 }
 
-// precondition:
-// 	* idManager received is valid
-// 	* id is positive
+// precondition: idManager received is valid
 // postcondition: return true only when array successfully updated with new id
-// invariant: valid length of struct
+// invariant: manager is the correct size before insert and after
 
 bool addID(idManager manager, dataType id)
 {
 	assert(manager!=NULL);
 
-	// decided to return bool if not valid length instead of asserts
-	/*assert(id>-1);*/
-	/*assert(isValidSize(manager));*/
-
 	int currLen = manager->currLength;
 	int maxLen = manager->maxLength;
-	// if neg id, maybe fork return -1
 
-	/*if (isValidSize(manager)&&id>-1&&*/
-			/*currLen < maxLen)*/
 	if (isValidSize(manager) && currLen < maxLen)
 	{
 		manager -> data[currLen] = id;
@@ -63,10 +52,13 @@ bool addID(idManager manager, dataType id)
 		if (isValidSize(manager))
 			return true;
 	}
+
 	return false;
 }
 
 
+// precondition: manager and data not null
+// postcondition: after free pointers set to null
 idManager destroyManager(idManager manager)
 {
 	if (manager != NULL)
@@ -84,8 +76,11 @@ idManager destroyManager(idManager manager)
 
 // Our invariant for this struct. Should check when we insert/delete.
 // note when add last element, currLen = maxLength so it's valid
+// precondition: manager is not null
 bool isValidSize(idManager manager)
 {
+	assert(manager!=NULL);
+
 	bool validSize = true;
 
 	int cL = manager->currLength;
@@ -100,16 +95,16 @@ bool isValidSize(idManager manager)
 }
 
 
-// idea: ifdef with function ptr endWork b/c param either pid_t or pthread_t
-// idea: process.c and thread.c have own print function which we pass as func ptr to this function?
-/*void doWork(idManager manager, int maxConcurrent, */
-		/*void (*work)(idManager, int*), void (*endWork)(pid_t))*/
-
 // TODO: invariant for indexing
 
+// precondition: manager not null and correct size
 void doWork(idManager manager, int maxConcurrent, 
 		void (*work)(idManager, int*), void (*endWork)(dataType))
 {
+	assert(manager!=NULL);
+	assert(isValidSize(manager));
+	assert(maxConcurrent > -1);
+
 	int amount = AMOUNT_OF_WORK;
 	int concurrentCounter = 0;
 	int numRun = 0;

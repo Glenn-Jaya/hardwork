@@ -18,10 +18,10 @@
 #define dataType pid_t
 #endif
 
-// Purpose: Provide safe withdrawel/insertion into array of ints that represent ids
+// Purpose: Provide safe withdrawel/insertion into array that contains ids
 typedef struct idHandler *idManager;
 
-// Purpose: Provide pseudo encapsulation by not defininng struct in header file
+// Purpose: Provide pseudo encapsulation by not defining struct in header file
 idManager newIdManager(int maxSize);
 
 idManager destroyManager(idManager manager);
