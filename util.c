@@ -1,11 +1,3 @@
-// small utility helper functions
-
-#include <stdbool.h>
-#include <ctype.h>
-#include <string.h>
-#include <stdlib.h>
-#include <assert.h>
-
 #include "util.h"
 
 // precondition:  argLength is a positive integer number greater than 0
@@ -40,9 +32,21 @@ bool isValidLength(int length)
 
 }
 
+// helper function for isValidParameters preconditions, else hard to read
+bool isString(char* possibleString)
+{
+	int length = strlen(possibleString);
+	return possibleString[length]=='\0';
+}
 
+
+// precondition: parameters and its elements are not null, elements are strings (end in \0)
 bool isValidParameters(char ** parameters)
 {
+	assert(parameters != NULL);
+	assert(parameters[1] != NULL && isString(parameters[1]));
+	assert(parameters[2] != NULL && isString(parameters[2]));
+
 	char* total = parameters[1];
 	if (!isStringNumber(total))
 	{
@@ -69,8 +73,10 @@ bool isValidParameters(char ** parameters)
 
 // note: negative numbers as strings are not considered numbers
 // 	 we should not be having any negative numbers as input anyways
+// precondition: string not null
 bool isStringNumber(char* string)
 {
+	assert(string != NULL);
 	int length = strlen(string);
 	for (int i = 0; i < length; i++)
 	{
