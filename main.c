@@ -17,7 +17,7 @@ int main(int argc, char** argv)
 	if (handleArgs(argc, argv))
 	{
 		int total = atoi(argv[1]);
-		int numAtSameTime = atoi(argv[3]);
+		int numAtSameTime = atoi(argv[2]);
 
 		run(total,numAtSameTime);
 	}
