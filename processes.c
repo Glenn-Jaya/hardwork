@@ -17,6 +17,7 @@ void childWork(idManager processManager, int* work)
 	if (id==0) // child
 	{
 		hard_work(work);
+		// without exit child tries to addID, don't want that because it's always 0!
 		exit(EXIT_SUCCESS);
 	}
 	addID(processManager, id);

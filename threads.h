@@ -3,6 +3,11 @@
 
 #include <pthread.h>
 #include "manager.h"
+/*
+ * Functions used from manager.h:
+ * 	addID(), newIdManager(),
+ * 	doWork(), destoryManager()
+ * 	*/
 
 void threadWork(idManager threadManager, int* work);
 void endThread(pthread_t *workThread);
