@@ -22,9 +22,6 @@
 	* minunit.h
 	* testManager .c and .h
 	* testUtil .c and .h
-	* tests.h
-	* testMath.c
-
 
 ## Compile
 

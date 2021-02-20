@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include "minunit.h"
-#include "tests.h"
 #include "testUtil.h"
 #include "testManager.h"
 
@@ -8,8 +7,6 @@ int tests_run = 0;
 
 static char * all_tests()
 {
-        mu_run_test(test_add);
-        mu_run_test(test_minus);
 	mu_run_test(test_valid_length);
 	mu_run_test(test_valid_params);
 	mu_run_test(test_string_is_number);

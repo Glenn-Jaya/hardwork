@@ -19,16 +19,9 @@ testUtil.o: testUtil.c testUtil.h util.o
 testManager.o: testManager.c testManager.h manager.o
 	$(CC) -c $^
 
-testMath.o: testMath.c tests.h
-	$(CC) -c $^
-
-test: main.c testMath.o testUtil.o util.o testManager.o manager.o hardwork.o
+test: main.c testUtil.o util.o testManager.o manager.o hardwork.o
 	$(CC) $^ 
 	./a.out
-
-testgdb: main.c testMath.o testUtil.o util.o
-	$(CC) $^ 
-	gdb ./a.out
 
 clean:
 	rm -f *.o

@@ -1,7 +1,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include "../util.h"
-#include "tests.h"
+#include "testUtil.h"
 #include "minunit.h"
 
 char * test_valid_length()
