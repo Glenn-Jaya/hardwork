@@ -17,10 +17,18 @@ void childWork(idManager processManager, int* work)
 	if (id==0) // child
 	{
 		hard_work(work);
-		// without exit child tries to addID, don't want that because it's always 0!
+
+		// without exit child we return twice, once for parent, once for child
+		// but we don't want to return twice, just once for parent
+		// else we'd increment the concurrentCounter of processes 
+		// 	in manager.c's doWork func by 2 instead of 1 ruining my while loops
+		// I think this might be why exec() never should return if it succeeds. Pretty neat.
 		exit(EXIT_SUCCESS);
 	}
-	addID(processManager, id);
+	else // parent
+	{
+		addID(processManager, id);
+	}
 }
 
 // precondition: pid is a positive value

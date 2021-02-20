@@ -3,6 +3,8 @@
 
 #include <stdio.h>
 #include <stdbool.h>
+
+//TODO is proccesses.h necessary?
 #include "processes.h"
 
 bool handleArgs(int argsLength, char** parameters);
