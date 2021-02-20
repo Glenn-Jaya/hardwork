@@ -1,7 +1,7 @@
 #include "manager.h"
 
 // this struct is not defined in the .h to provide encapsulation
-// for example other c files do not know anything about the vars inside
+// for example other c files do not know anything about the vars inside and can't access directly
 // 	they only know about the ptr in header.
 // 	fun way to sort of provide Object O
 struct idHandler
@@ -34,6 +34,8 @@ idManager newIdManager(int maxSize)
 	return manager;
 }
 
+// Adds into array but note it also increments currLength
+// 	so we are keeping track of how much we are adding as well!
 // precondition: idManager received is valid
 // postcondition: return true only when array successfully updated with new id
 // invariant: manager is the correct size before insert and after
@@ -95,15 +97,18 @@ bool isValidSize(idManager manager)
 }
 
 
-// TODO: invariant for indexing
-
-// precondition: manager not null and correct size
+// main logic, every element added to array by addID() has work and endWork done to it
+// 	ensures we always end the work not just start it and don't incorrectly access array :)
+// precondition: 
+// 	manager not null and correct size
+// 	concurrent max is +'ve
+// postconditon: manager is still valid by our invariant
 void doWork(idManager manager, int maxConcurrent, 
 		void (*work)(idManager, int*), void (*endWork)(dataType))
 {
 	assert(manager!=NULL);
 	assert(isValidSize(manager));
-	assert(maxConcurrent > -1);
+	assert(maxConcurrent > 0);
 
 	int amount = AMOUNT_OF_WORK;
 	int concurrentCounter = 0;
@@ -138,4 +143,6 @@ void doWork(idManager manager, int maxConcurrent,
 	duration = diff(beginClk, endClk);
 	printf("\n\nCompleted in: %ld seconds and %ld nanoseconds.\n\n", 
 			duration.tv_sec, duration.tv_nsec);
+
+	assert(isValidSize(manager));
 }
