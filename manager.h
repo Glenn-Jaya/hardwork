@@ -18,20 +18,24 @@
 #define dataType pid_t
 #endif
 
-// Purpose: Provide safe withdrawel/insertion into array of ints that represent ids
+// Provide safe withdrawel/insertion into array that contains ids
 typedef struct idHandler *idManager;
 
-// Purpose: Provide pseudo encapsulation by not defininng struct in header file
+// Provide pseudo encapsulation by not defining struct in header file
 idManager newIdManager(int maxSize);
-
 idManager destroyManager(idManager manager);
 
 
+// Invariant for idManager/struct
 bool isValidSize(idManager manager);
 
-//bool addID(idManager manager, int id);
+// insert data into idManager
+// manager does all the work, encapsulation 
+// 	and whoever using it doesn't have to worry about how it works/implementation details
 bool addID(idManager manager, dataType id);
 
+// main logic, every element added to array by addID() has work and endWork done to it
+// 	ensures we always end the work not just start it and don't incorrectly access array :)
 void doWork(idManager manager, int maxConcurrent, 
 		void (*work)(idManager, int*), void (*endWork)(dataType));
 

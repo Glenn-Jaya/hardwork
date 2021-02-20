@@ -1,8 +1,5 @@
 #include "hardwork.h"
 
-// all the code here is given so no need to mark this
-
-/*static void * hard_work(void *work)*/
 void * hard_work(void *work)
 {
 	int *amount = (int*)work;

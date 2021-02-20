@@ -1,15 +1,7 @@
-// small utility helper functions
-
-#include <stdbool.h>
-#include <ctype.h>
-#include <string.h>
-#include <stdlib.h>
-#include <assert.h>
-
 #include "util.h"
 
 // precondition:  argLength is a positive integer number greater than 0
-// postconditions: None because it returns void
+// postconditions: only return true if arguments are valid
 bool handleArgs(int argsLength, char** parameters)
 {
 	assert(argsLength>0);
@@ -23,11 +15,6 @@ bool handleArgs(int argsLength, char** parameters)
 			and y = the number you want running at the same time\n");
 		exit(1);
 	}
-
-	/*int total = atoi(parameters[1]);*/
-	/*int numAtSameTime = atoi(parameters[3]);*/
-
-	/*runProcesses(total,numAtSameTime);*/
 	return true;
 }
 
@@ -45,9 +32,21 @@ bool isValidLength(int length)
 
 }
 
+// helper function for isValidParameters preconditions, else hard to read
+bool isString(char* possibleString)
+{
+	int length = strlen(possibleString);
+	return possibleString[length]=='\0';
+}
 
+
+// precondition: parameters and its elements are not null, elements are strings (end in \0)
 bool isValidParameters(char ** parameters)
 {
+	assert(parameters != NULL);
+	assert(parameters[1] != NULL && isString(parameters[1]));
+	assert(parameters[2] != NULL && isString(parameters[2]));
+
 	char* total = parameters[1];
 	if (!isStringNumber(total))
 	{
@@ -69,13 +68,21 @@ bool isValidParameters(char ** parameters)
 		return false;
 	}
 
+	if (atoi(numAtSameTime)==0)
+	{
+		printf("\nThe 2nd arg after pgm name (y) can't be 0, must be 1 or greater\n");
+		return false;
+	}
+
 	return true;
 }
 
 // note: negative numbers as strings are not considered numbers
 // 	 we should not be having any negative numbers as input anyways
+// precondition: string not null
 bool isStringNumber(char* string)
 {
+	assert(string != NULL);
 	int length = strlen(string);
 	for (int i = 0; i < length; i++)
 	{
@@ -84,4 +91,3 @@ bool isStringNumber(char* string)
 	}
 	return true;
 }
-
