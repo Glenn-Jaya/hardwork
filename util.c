@@ -33,13 +33,13 @@ bool handleArgs(int argsLength, char** parameters)
 
 bool isValidLength(int length)
 {
-	if (length==4)
+	if (length==3)
 	{
 		return true;
 	}
 	else
 	{
-		printf("\nYou have entered the wrong number of arguments, excluding the pgm name you need 3 arguments\n");
+		printf("\nYou have entered the wrong number of arguments, excluding the pgm name you need 2 arguments\n");
 		return false;
 	}
 
@@ -55,23 +55,17 @@ bool isValidParameters(char ** parameters)
 		return false;
 	}
 
-	char* type = parameters[2];
-	if (strcmp(type,"-p")!=0 &&  strcmp(type,"-t")!=0)
-	{
-		printf("\nThe 2nd arg after pgm name must be -p or -t\n");
-		return false;
-	}
 
-	char* numAtSameTime = parameters[3];
+	char* numAtSameTime = parameters[2];
 	if (!isStringNumber(numAtSameTime))
 	{
-		printf("\nThe 3nd arg after pgm name must be a +'ve number\n");
+		printf("\nThe 2nd arg after pgm name must be a +'ve number\n");
 		return false;
 	}
 
 	if (atoi(numAtSameTime) > atoi(total))
 	{
-		printf("\nThe 3rd arg after pgm name (y) must be <= than the 1st arg (x)\n");
+		printf("\nThe 2nd arg after pgm name (y) must be <= than the 1st arg (x)\n");
 		return false;
 	}
 
@@ -82,7 +76,6 @@ bool isValidParameters(char ** parameters)
 // 	 we should not be having any negative numbers as input anyways
 bool isStringNumber(char* string)
 {
-	/*printf("%s\n",string);*/
 	int length = strlen(string);
 	for (int i = 0; i < length; i++)
 	{
