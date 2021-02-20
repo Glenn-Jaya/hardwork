@@ -39,9 +39,9 @@ The above command produces 2 executables: processes.out and threads.out
 ## Run Pgms
 
 ```
-./processes.out x y # for processes
+./processes.out x y
 
-./threads.out x y # for threads
+./threads.out x y
 ```
 
 Where x is the total number of threads/processes to run.
