@@ -1,3 +1,5 @@
+// Description: Initiates thread code and implements thread creation and waiting on the thread
+
 #ifndef THREADS_H
 #define THREADS_H
 

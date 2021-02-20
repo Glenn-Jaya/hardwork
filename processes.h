@@ -1,3 +1,5 @@
+// Description: Initiates process code and implements forking and waiting on the child
+
 #ifndef PROC_H
 #define PROC_H
 

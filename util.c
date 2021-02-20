@@ -9,7 +9,7 @@
 #include "util.h"
 
 // precondition:  argLength is a positive integer number greater than 0
-// postconditions: None because it returns void
+// postconditions: only return true if arguments are valid
 bool handleArgs(int argsLength, char** parameters)
 {
 	assert(argsLength>0);
@@ -23,11 +23,6 @@ bool handleArgs(int argsLength, char** parameters)
 			and y = the number you want running at the same time\n");
 		exit(1);
 	}
-
-	/*int total = atoi(parameters[1]);*/
-	/*int numAtSameTime = atoi(parameters[3]);*/
-
-	/*runProcesses(total,numAtSameTime);*/
 	return true;
 }
 
