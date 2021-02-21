@@ -136,14 +136,17 @@ void doWork(idManager manager, int maxConcurrent,
 			printf("created work, total created: %d\n",numCreated);
 		}
 
+#ifdef BATCH
 		while (numRun < numCreated)
 		{
+#endif
 			endWork(manager->data[numRun]);
 			concurrentCounter--;
 			numRun++;
 			printf("ended work, total ended: %d\n",numRun);
+#ifdef BATCH
 		}
-
+#endif
 	}
 
 	clock_gettime(CLOCK_REALTIME, &endClk);
