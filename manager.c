@@ -112,6 +112,7 @@ void doWork(idManager manager, int maxConcurrent,
 
 	int amount = AMOUNT_OF_WORK;
 	int concurrentCounter = 0;
+	int numCreated = 0;
 	int numRun = 0;
 	int totalToRun = manager->maxLength;
 
@@ -124,19 +125,25 @@ void doWork(idManager manager, int maxConcurrent,
 
 	while (numRun < totalToRun)
 	{
-		while((concurrentCounter+numRun) < totalToRun && 
-				concurrentCounter<maxConcurrent)
+		concurrentCounter = numCreated - numRun;
+		while(concurrentCounter<maxConcurrent && 
+				numCreated < totalToRun)
 		{
 
 			work(manager,&amount);
 			concurrentCounter++;
-			printf("created work, total created: %d\n",numRun+concurrentCounter);
+			numCreated++;
+			printf("created work, total created: %d\n",numCreated);
 		}
 
-		endWork(manager->data[numRun]);
-		concurrentCounter--;
-		numRun++;
-		printf("ended work, total ended: %d\n",numRun);
+		while (numRun < numCreated)
+		{
+			endWork(manager->data[numRun]);
+			concurrentCounter--;
+			numRun++;
+			printf("ended work, total ended: %d\n",numRun);
+		}
+
 	}
 
 	clock_gettime(CLOCK_REALTIME, &endClk);
