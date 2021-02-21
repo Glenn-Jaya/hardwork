@@ -44,6 +44,27 @@ The above command produces 2 executables: processes.out and threads.out
 Where x is the total number of threads/processes to run.
 Where y is the maximum number of threads/processes you want to be able to run at the same time/concurrently.
 
+## Batch Pgms
+
+We were told we can do this assignment in two ways and that make should only produce 2 executables. See the report for details. But I decidied I wanted to do both options and see which is faster. 
+
+## Compile/create batch executables
+
+```
+make batch
+```
+This produces 2 more executables procBatch.out and threadBatch.out
+
+To run those do:
+
+```
+./procBatch.out x y
+
+./threadBatch.out x y
+```
+
+Where x and y is the same as the regular non batch executables.
+
 ## Clean
 
 ```
