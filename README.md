@@ -68,3 +68,8 @@ Alternatively you can type make from inside the tests/ folder to compile and run
 # INSIDE tests/ folder!
 make
 ```
+
+# Hypothesis
+
+I think processes will take longer to create.
+The reason why I think this is because the heap/memory is the same for all threads but if you create a new process you have to 
