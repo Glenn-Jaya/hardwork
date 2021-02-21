@@ -36,9 +36,9 @@ created work, total created: 12
 ended work, total ended: 7
 ```
 
-So here we are doing option 2, in batches where our batch size is y.
+So here we are doing option 1, in batches where our batch size is y.
 
-But if process.out does:
+But process.out runs in singles (option 2):
 
 ```
 created work, total created: 6
@@ -60,7 +60,7 @@ ended work, total ended: 7
 processes.out took around 11 million nano sec on my aviary machine and procBatch.out took around 16 or 17 mllion. 
 
 For other numbers I entered, running it in batches seem to take a longer amount of time.
-The same thrend is true for threads.out vs threadProc.out.
+The same trend is true for threads.out vs threadProc.out.
 
 The only difference in the batch solutions and the non batch solutions is in manager.c:
 
@@ -69,11 +69,13 @@ The only difference in the batch solutions and the non batch solutions is in man
                 while (numRun < numCreated){
 #endif
 		// logic to end process/thread
+#ifdef BATCH
 		}
+#endif
 ```
 
 This actually shows the value of using these profiler for keeping track of the time, it proves/shows which implementation is faster and therefore less costly.
-My guess as to why it is slower is that the cost of the individual instructions of this while loop simply costs more than it would ending the processes/threads 1 at a time. You are performing an addition numRun + 1 comparisions, plus 1 because because of the case where numRun = numCreated we still look at the condition to see if we should go into the while loop.Its cheaper to simply end the work and move on then doing these comparisons, ironically the lazy approach is the most cost effective approach.
+My guess as to why it is slower is that the cost of the individual instructions of this while loop simply costs more than it would ending the processes/threads 1 at a time. You are performing an additional numRun + 1 comparisions, plus 1 because because of the case where numRun = numCreated we still look at the condition to see if we should go into the while loop. Its cheaper to simply end the work and move on then doing these comparisons, ironically the lazy approach is the most cost effective approach.
 
 
 #### No deletion, only insertion
@@ -97,7 +99,7 @@ Note that the amount of work given to the hardwork function is defined as a cons
 
 Originally I made this program for just processes with the intention of a seperate main file for threads.
 But Dr Rasit informed us that we can use preprocessor code to specify whether we are doing threads or processes.
-The benefit of this is that both threads and processes are using manager.c and therefore are using the same overarching logic for both.
+The benefit of this is that both threads and processes are using manager.c and therefore are using the same overarching logic for both, they also print the exact same way.
 This minimizes the amount of difference between the 2 executables produced which is important because we are interested in the difference between the two.
 
 IFDEF THREADS were used in only 2 places. Once in main to decide whether to run the processes.c or threads.c code. The other is in manager.h so that the type the array stores can either be pid\_t (an int) or pthread\_t (unsigned long in this environement) at compile time.
@@ -112,4 +114,15 @@ void doWork(idManager manager, int maxConcurrent,
 The 3rd argument is a pointer named work to a function that takes in an idManager and an int pointer (the amount of work which we defined as a constant) and returns void. That means we can pass in any function that takes in the same stuff and returns void! You can see this in testManager.c where i created my own simple work function. This makes the manager agnostic/independent of specific implementation. I could use this for another project that requires each element to have work done on.
 
 The 4th argument shows how we are actually combining the IFDEF technique with the function pointer technique. At compile time dataType is replaced by whatever you specificy in manager's own .h file, therefore whatever type the array actually stores! I think this is a pretty neat and elegant solution.
+
+---
+
+## Experiments
+
+Note that lscpu says we can run 12 threads on our cpus in total.
+Keep in mind that 1 process can be thought of as just 1 thread of execution.
+Therefore for my table i'm going to do 11, 12, 13 as well to see if anything happens at this breakpoint.
+
+:
+
 

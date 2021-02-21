@@ -45,6 +45,7 @@ clean:
 	rm -f *.out
 	rm -f *.gch
 	rm -f *.o
+	rm -f *.txt
 
 test:
 	cd tests/ && make

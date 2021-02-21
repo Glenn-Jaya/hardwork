@@ -91,6 +91,8 @@ Alternatively you can type make from inside the tests/ folder to compile and run
 make
 ```
 
+---
+
 # Hypothesis
 
 I think processes will take longer to create than threads.
