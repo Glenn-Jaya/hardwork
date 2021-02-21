@@ -4,6 +4,7 @@
 
 * Makefile
 * README
+* Report.md
 * main.c
 * hardwork .c and .h
 	* Code relating to the hard\_work function and calculation of timing duration
@@ -92,5 +93,5 @@ make
 
 # Hypothesis
 
-I think processes will take longer to create.
-The reason why I think this is because the heap/memory is the same for all threads but if you create a new process you have to 
+I think processes will take longer to create than threads.
+If we run the processes executable then it should take longer than the threads executable.
