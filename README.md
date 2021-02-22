@@ -6,6 +6,7 @@
 * README
 * Report.md
 * main.c
+* runExperiments.py
 * hardwork .c and .h
 	* Code relating to the hard\_work function and calculation of timing duration
 * util .c and .h
@@ -65,6 +66,20 @@ To run those do:
 ```
 
 Where x and y is the same as the regular non batch executables.
+
+## The python file
+
+You don't have to use this and if you do be aware it can take a few minutes to run this.
+The reason why is because it's performing each trial of my experiments 3 times each and each time doing processes and threads.
+The hardcoded trials in this python file are a reflection of the tables in the report.
+This was used to make experiments easily reproduceable on other machines but other users without the user having to type out each command every time.
+To run this script just do:
+
+```
+python3 runExperiments.py
+```
+
+Aviary has python3 but I didn't realize the mac computers (Rodents) didn't have python or clock\_get\_time() function for profiling so I couldn't do the bonus.
 
 ## Clean
 

@@ -123,6 +123,91 @@ Note that lscpu says we can run 12 threads on our cpus in total.
 Keep in mind that 1 process can be thought of as just 1 thread of execution.
 Therefore for my table i'm going to do 11, 12, 13 as well to see if anything happens at this breakpoint.
 
-:
+I have a python script called runexperiments.py and when I ran it I got the following results:
+
+| Total p/t | y Concurrent p/t | Processes Sec | Processes NanoSec | Threads Sec | Threads Nanosec |
+|-----------|------------------|---------------|-------------------|-------------|-----------------|
+|         1 |                1 |             0 |           1546664 |           0 |         1330518 |
+|       100 |                4 |             2 |         206374160 |           0 |        30810012 |
+|       100 |                8 |             1 |         438477680 |           0 |        16444342 |
+|       100 |               11 |             1 |         444003758 |           0 |        11904182 |
+|       100 |               12 |             1 |         643031991 |           0 |        10976229 |
+|       100 |               13 |             1 |         446218894 |           0 |         9978226 |
+|       100 |               32 |             1 |         537533164 |           0 |         4829754 |
+|       100 |               64 |             1 |         561068917 |           0 |         4222573 |
+|       100 |              100 |             1 |         429370959 |           0 |         5574755 |
+|      1000 |                4 |            25 |         322533255 |           0 |       309246554 |
+|      1000 |                8 |            16 |         281340840 |           0 |       151002256 |
+|      1000 |               11 |            15 |         238388271 |           0 |       107831249 |
+|      1000 |               12 |            15 |         184792246 |           0 |        99502168 |
+|      1000 |               13 |            15 |         596618968 |           0 |        92861871 |
+|      1000 |               32 |            14 |         591322181 |           0 |        37816761 |
+|      1000 |               64 |            14 |         599273519 |           0 |        18932290 |
+|      1000 |              500 |            15 |         591167474 |           0 |        33408664 |
+|      1000 |             1000 |            -1 |                -1 |           0 |        41912685 |
+
+Note that this python script ran each row of the above table 3 times and took the average of the 3 to average out the differences.
+
+It's a little hard to understand the data so what I did was I made graphs, where y axis is number of seconds, x axis is max concurrent threads.
+
+### X = 100 for Processes
+
+![x=100 for P with Python](https://i.imgur.com/znTsUCb.png)
+
+### X = 100 for Threads
+
+![x=100 for T with Python](https://i.imgur.com/8h2uoF7.png)
+
+### X = 1000 for Processes
+
+![x=1000 for P with Python](https://i.imgur.com/2CAmbC9.png)
+
+### X = 1000 for Threads
+
+![x=1000 for T with Python](https://i.imgur.com/ahII71p.png)
+
+
+I also noticed that it took a little long to run this python script, I was concerned so I also ran all the trials individually like: ./processes.out 100 64. Did that for each row and the table I got was:
+
+| Total p/t | Concurrent p/t | Processes Sec | Processes NanoSec  | Threads Sec | Threads Nanosec |
+|-----------|----------------|---------------|--------------------|-------------|-----------------|
+|         1 |              1 |             0 |            1901940 |           0 |         1410390 |
+|       100 |              4 |             0 |           42295263 |           0 |        32991732 |
+|       100 |              8 |             0 |           18246688 |           0 |        16525227 |
+|       100 |             11 |             0 |           13664286 |           0 |        11820772 |
+|       100 |             12 |             0 |           12495864 |           0 |        11374561 |
+|       100 |             13 |             0 |           12407311 |           0 |         9562214 |
+|       100 |             32 |             0 |            8834756 |           0 |         6559533 |
+|       100 |             64 |             0 |            7819786 |           0 |         5262629 |
+|       100 |            100 |             0 |            7734571 |           0 |         5752064 |
+|      1000 |              4 |             0 |          398128816 |           0 |       308443795 |
+|      1000 |              8 |             0 |          156755145 |           0 |       154497342 |
+|      1000 |             11 |             0 |          112053083 |           0 |       112802952 |
+|      1000 |             12 |             0 |          103779837 |           0 |        99213120 |
+|      1000 |             13 |             0 |           95140488 |           0 |        85435687 |
+|      1000 |             32 |             0 |           47316808 |           0 |        37304225 |
+|      1000 |             64 |             0 |           48236510 |           0 |        23107904 |
+|      1000 |            500 |             0 |           45679212 |           0 |        24174819 |
+|      1000 |           1000 |             0 | fork failed at 509 |           0 |        24174819 |
+
+I also made graphs for direct execution as well:
+
+
+### X = 100 for Processes
+
+![x=100 for P no Python](https://i.imgur.com/HOJ3ikG.png)
+
+### X = 100 for Threads
+
+![x=100 for T no Python](https://i.imgur.com/CcH4sWC.png)
+
+### X = 1000 for Processes
+
+![x=1000 for P no Python](https://i.imgur.com/CjKtVau.png)
+
+### X = 1000 for Threads
+
+![x=1000 for T no Python](https://i.imgur.com/uMO58Zz.png)
+
 
 
