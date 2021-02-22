@@ -146,6 +146,8 @@ I have a python script called runexperiments.py and when I ran it I got the foll
 |      1000 |              500 |            15 |         591167474 |           0 |        33408664 |
 |      1000 |             1000 |            -1 |                -1 |           0 |        41912685 |
 
+***-1 row actually had the fork failed***
+
 Note that this python script ran each row of the above table 3 times and took the average of the 3 to average out the differences.
 
 It's a little hard to understand the data so what I did was I made graphs, where y axis is number of seconds, x axis is max concurrent threads.
@@ -153,6 +155,8 @@ It's a little hard to understand the data so what I did was I made graphs, where
 ### X = 100 for Processes
 
 ![x=100 for P with Python](https://i.imgur.com/znTsUCb.png)
+
+**Note the above graph is plotting the nanoseconds, notice for y = 4 it is 2 sec the rest are 1 sec so initially the graph starts high not low.
 
 ### X = 100 for Threads
 
@@ -282,3 +286,7 @@ So we just confirmed this threshold point is at 12. Therefore there is an optima
 Now lets think about this from the perspective of a OS. How is it possible to run 15 threads if we only have 12 cores? The OS does swapping of this thread on that core really fast to virtualize/give the illusion that 15 threads are actually running at once.
 
 What happens when you switch between threads? A context switch! So it becomes more costly because the OS has to save all the state of this thread in registers than load the register of the other thread and keep repeating this process. This process is a linear/serial one, we are increasing the cost of this serieal problem the more threads we have and therefore increasing the cost of the program as a whole as we keep increasing the threads after the threshold point.
+
+## Bonus
+
+Note I could not do the bonus because I didn't have a mac computer with an OS version high enough to run the profiler timer code, you need like Mac OS 10.2
