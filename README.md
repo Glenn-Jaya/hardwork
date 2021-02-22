@@ -69,10 +69,15 @@ Where x and y is the same as the regular non batch executables.
 
 ## The python file
 
-You don't have to use this and if you do be aware it can take a few minutes to run this.
-The reason why is because it's performing each trial of my experiments 3 times each and each time doing processes and threads.
+**You don't have to use this and if you do be aware it can take a few minutes to run this.**
+
+All this script does is runs ./processes.out and ./threads.out for each trial of my experiment 3 times.
+Each time it redirects to the respected generated .txt file and then the python script uses regular expressions to get the nanoseconds and the seconds from this file and then averages the times of the 3 runs and prints it to the screen.
+This is why it takes so long to run.
 The hardcoded trials in this python file are a reflection of the tables in the report.
 This was used to make experiments easily reproduceable on other machines but other users without the user having to type out each command every time.
+
+
 To run this script just do:
 
 ```

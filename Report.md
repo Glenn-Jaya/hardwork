@@ -209,5 +209,76 @@ I also made graphs for direct execution as well:
 
 ![x=1000 for T no Python](https://i.imgur.com/uMO58Zz.png)
 
+## Results
 
+So actually I did not have to worry, even though the python trials took longer (maybe something to do with pythons subprocess module) the trends were like the ones for the directly execution trials on the second table.
 
+For the same total number of processes/threads increasing the maximum concurrent threads seems initially drasitically decrease execution time but up to a certain point/threshold. Then there is a slight trend of increasing execution time, for some it is so slight that it looks like a flat fline on the graph.
+
+When you incrase the max number of processes/threads, the time it takes increases.
+
+Fork fails when you try to run 500 concurrent processes. I tried it with -DBATCH as well, had the same thing happen.
+
+## Analysis of Results/Questions
+
+### Which is faster?
+
+From these results it appears creating threads is faster than processes that run hardwork.
+
+### Do your results match your hypothesis? Why or why not?
+
+Yes these results match my hypotehsis.
+
+The reason why it is more costly to create processes is related to the fact that threads share the same address space and share the same memory. However with processes the OS must create an indepedent address space for each process, consequently their data is not shared. It is also costly because the OS has to allocate memory each time we create a process but threads will re-use the existing heap, we are allocating more memory with processes every time we create it. And the more proceses you create the more costly it gets.
+
+Proof of how costly this is when we tried to run processes.out with x = 1000 and y = 1000:
+
+```
+created work, total created: 508
+created work, total created: 509
+fork failed
+```
+
+The fork fails when we do not have enough resources to do a fork.
+The address space is just a series of memory locations that can be accessed by an address.
+So when we are creating processes the OS make this new section of memory and at some point we run out of memory to allocate. But we are able to run x = 1000 and y = 1000 threads just fine because the OS is not making entirely new contiguous memory locations like with processes because we want the processes to have private memory. Again threads share the same address space.
+
+I also have another theory why processes are more costly. In the textbook it goes on a tangent about file descriptors, showing how you can fork and the child inherits the parents file descriptor. But if you close the child file descriptor it does not also close the parents file descriptor. This initialization of I/O for processes is done by the OS. But threads share file descriptors because multiple threads are in 1 process. So when we are creating processes I think this is another reason why it is more costly but is not mentioned in great detail in the textbook. 
+
+This project is very similar to threadpools where some main service calls worker threads to run some work. The processes side of this project is the same thing but uses processes to create parallelism where part of the code is run on each cpu core.
+
+### Is there a point of diminishing returns?
+
+As noted by the graphs, at first increasing the max concurrent number of threads exponentially reduces execution time but there seems to be a point where increasing the number of maximum concurrent threads/processes has little benefit and infact starts to increase. 
+
+My results give me an indication that I need to pursue this increase further. So lets do threads with X = 10000 to see if it gives further proof of our theory:
+
+| x     | y     | nanoseconds |
+|-------|-------|-------------|
+| 10000 | 5     | 406609048   |
+| 10000 | 10    | 108936762   |
+| 10000 | 15    | 738614222   |
+| 10000 | 20    | 151995696   |
+| 10000 | 200   | 150323089   |
+| 10000 | 500   | 160558462   |
+| 10000 | 1000  | 168927591   |
+| 10000 | 2000  | 179349718   |
+| 10000 | 5000  | 219546561   |
+| 10000 | 8000  | 253606674   |
+| 10000 | 10000 | 320055614   |
+
+And here is a graph for X is 10000 threads:
+
+![10000](https://i.imgur.com/5xseGLw.png)
+
+Ok so somewhere between 10 and 15 it went from the time to falling to rising and we keep rising till we reach y = 10000!
+
+The reason for this is due to Amdahl's law. At some point we can not parallelize this program any further and all we have left is the serialized part of this project. At first it was easy to break this program apart into chunks that could be run in parrallel similar to an embarassingly parellel program but as the program went on there is less and less benefit to parrallelizing the problem. In fact between 10 and 15 max concurrent there appears to be an increase cost. Remember the number of cores for this machine is 12 and this is probably the point at where this change occurs. 
+
+If I run with y = 11, nanoseconds is only 40 million. But if I run with y = 12, nanoseconds jumps to 800 million.
+
+So we just confirmed this threshold point is at 12. Therefore there is an optimal max of threads to run this program.
+
+Now lets think about this from the perspective of a OS. How is it possible to run 15 threads if we only have 12 cores? The OS does swapping of this thread on that core really fast to virtualize/give the illusion that 15 threads are actually running at once.
+
+What happens when you switch between threads? A context switch! So it becomes more costly because the OS has to save all the state of this thread in registers than load the register of the other thread and keep repeating this process. This process is a linear/serial one, we are increasing the cost of this serieal problem the more threads we have and therefore increasing the cost of the program as a whole as we keep increasing the threads after the threshold point.
